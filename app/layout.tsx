@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     siteName: 'Lacet',
     locale: 'fr_FR',
     type: 'website',
+    images: [{ url: '/logo.png' }],
   },
 }
 
