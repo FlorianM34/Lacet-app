@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { Map, Users, Mountain, Crosshair, MessageSquare, MapPin, Star } from 'lucide-react'
 import { Nav } from '@/components/Nav'
 import { Footer } from '@/components/Footer'
 import { LogoIcon } from '@/components/Logo'
@@ -155,19 +156,19 @@ export default function HomePage() {
               number="1"
               title="Crée ta rando"
               description="Publie ton itinéraire avec la distance, le dénivelé, la date et le niveau requis. Importe ou dessine ton tracé GPX."
-              icon="🗺️"
+              icon={<Map className="w-7 h-7 text-[#1D9E75]" />}
             />
             <StepCard
               number="2"
               title="Trouve ton groupe"
               description="L'algorithme de matching te propose des randonneurs compatibles avec ton niveau et tes disponibilités. Tu choisis."
-              icon="🤝"
+              icon={<Users className="w-7 h-7 text-[#1D9E75]" />}
             />
             <StepCard
               number="3"
               title="Marche ensemble"
               description="Coordonnez-vous dans le chat de groupe, partagez le point de départ, et vivez une aventure inoubliable."
-              icon="🏔️"
+              icon={<Mountain className="w-7 h-7 text-[#1D9E75]" />}
             />
           </div>
         </div>
@@ -187,22 +188,22 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <FeatureCard
-              icon="🎯"
+              icon={<Crosshair className="w-6 h-6 text-[#1D9E75]" />}
               title="Matching par niveau"
               description="Débutant, intermédiaire ou expert — tu rencontres des gens au même niveau que toi, pas plus, pas moins."
             />
             <FeatureCard
-              icon="💬"
+              icon={<MessageSquare className="w-6 h-6 text-[#1D9E75]" />}
               title="Chat de groupe"
               description="Un chat intégré pour chaque sortie. Organisez le covoiturage, partagez des photos, restez coordonnés."
             />
             <FeatureCard
-              icon="📍"
+              icon={<MapPin className="w-6 h-6 text-[#1D9E75]" />}
               title="Itinéraires GPX"
               description="Importez ou exportez vos tracés GPS. Visualisez le profil de dénivelé et l'itinéraire détaillé."
             />
             <FeatureCard
-              icon="⭐"
+              icon={<Star className="w-6 h-6 text-[#1D9E75]" />}
               title="Évaluations post-rando"
               description="Après chaque sortie, évaluez vos compagnons. Construisez votre réputation de randonneur fiable."
             />

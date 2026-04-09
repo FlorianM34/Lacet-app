@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 import { getUsers, getUserById } from '@/lib/supabase-admin'
 import { UsersTable } from '@/components/admin/UsersTable'
 
@@ -30,13 +31,15 @@ export default async function UsersPage({ searchParams }: PageProps) {
         <p className="text-gray-400 text-sm mt-1">Gérez les comptes depuis Supabase</p>
       </div>
 
-      <UsersTable
-        users={users}
-        total={total}
-        page={page}
-        search={search}
-        selectedUser={selectedUser}
-      />
+      <Suspense fallback={<div className="text-sm text-gray-400">Chargement…</div>}>
+        <UsersTable
+          users={users}
+          total={total}
+          page={page}
+          search={search}
+          selectedUser={selectedUser}
+        />
+      </Suspense>
     </div>
   )
 }

@@ -40,10 +40,13 @@ export interface DashboardStats {
 }
 
 export async function getDashboardStats(): Promise<DashboardStats> {
+  const weekAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+
   const [
     { count: totalUsers },
     { count: newUsersThisWeek },
-    { data: platforms },
+    { count: iosCount },
+    { count: androidCount },
     { count: totalHikes },
     { count: hikesThisWeek },
   ] = await Promise.all([
@@ -51,23 +54,27 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     getAdminClient()
       .from('profiles')
       .select('*', { count: 'exact', head: true })
-      .gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()),
-    getAdminClient().from('profiles').select('platform'),
+      .gte('created_at', weekAgo),
+    getAdminClient()
+      .from('profiles')
+      .select('*', { count: 'exact', head: true })
+      .eq('platform', 'ios'),
+    getAdminClient()
+      .from('profiles')
+      .select('*', { count: 'exact', head: true })
+      .eq('platform', 'android'),
     getAdminClient().from('hikes').select('*', { count: 'exact', head: true }),
     getAdminClient()
       .from('hikes')
       .select('*', { count: 'exact', head: true })
-      .gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()),
+      .gte('created_at', weekAgo),
   ])
-
-  const iosCount = platforms?.filter((p) => p.platform === 'ios').length ?? 0
-  const androidCount = platforms?.filter((p) => p.platform === 'android').length ?? 0
 
   return {
     totalUsers: totalUsers ?? 0,
     newUsersThisWeek: newUsersThisWeek ?? 0,
-    iosCount,
-    androidCount,
+    iosCount: iosCount ?? 0,
+    androidCount: androidCount ?? 0,
     totalHikes: totalHikes ?? 0,
     hikesThisWeek: hikesThisWeek ?? 0,
   }
