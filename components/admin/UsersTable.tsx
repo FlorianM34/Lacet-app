@@ -2,10 +2,10 @@
 
 import { useState } from 'react'
 import { useRouter, usePathname, useSearchParams } from 'next/navigation'
-import type { Profile } from '@/lib/supabase-admin'
+import type { User } from '@/lib/supabase-admin'
 import Image from 'next/image'
 
-type UserWithHikeCount = Profile & { hike_count: number }
+type UserWithHikeCount = User & { hike_count: number }
 
 interface UsersTableProps {
   users: UserWithHikeCount[]
@@ -23,54 +23,50 @@ function formatDate(iso: string) {
   })
 }
 
-function AppleIcon() {
-  return (
-    <svg className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98l-.09.06c-.22.14-2.2 1.3-2.18 3.87.03 3.02 2.65 4.03 2.68 4.04l-.05.17zM13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-    </svg>
-  )
-}
-
-function AndroidIcon() {
-  return (
-    <svg className="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M3.18 23.76c.35.2.74.24 1.12.14L15.34 12 12 8.66 3.18 23.76zM20.5 10.61L17.7 9 15 12l2.7 3 2.8-1.61c.8-.46.8-2.32 0-2.78zM1.86.29C1.54.7 1.36 1.28 1.36 2v20c0 .72.18 1.3.5 1.71L12 12 1.86.29zM15.34 12L4.3.1A1.78 1.78 0 0 0 3.18.24L15.34 12z" />
-    </svg>
-  )
-}
-
-function PlatformBadge({ platform }: { platform: string | null }) {
-  if (!platform) return <span className="text-gray-300">—</span>
-  const isIos = platform.toLowerCase() === 'ios'
+function LevelBadge({ level }: { level: string }) {
+  const styles: Record<string, string> = {
+    easy: 'bg-green-50 text-green-700',
+    medium: 'bg-orange-50 text-orange-700',
+    hard: 'bg-red-50 text-red-700',
+    beginner: 'bg-green-50 text-green-700',
+    intermediate: 'bg-orange-50 text-orange-700',
+    expert: 'bg-red-50 text-red-700',
+  }
   return (
     <span
-      className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${
-        isIos ? 'bg-gray-100 text-gray-600' : 'bg-green-50 text-green-700'
-      }`}
+      className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium capitalize ${styles[level] ?? 'bg-gray-100 text-gray-600'}`}
     >
-      {isIos ? <AppleIcon /> : <AndroidIcon />} {platform.toUpperCase()}
+      {level}
     </span>
   )
 }
 
-function Avatar({ url, name }: { url: string | null; name: string | null }) {
+function Stars({ avg, count }: { avg: number; count: number }) {
+  if (count === 0) return <span className="text-gray-300 text-xs">—</span>
+  return (
+    <span className="text-xs text-gray-600">
+      <span className="text-yellow-400">★</span> {avg.toFixed(1)}{' '}
+      <span className="text-gray-400">({count})</span>
+    </span>
+  )
+}
+
+function Avatar({ url, name }: { url: string | null; name: string }) {
   const initials = name
-    ? name
-        .split(' ')
-        .map((n) => n[0])
-        .slice(0, 2)
-        .join('')
-        .toUpperCase()
-    : '?'
+    .split(' ')
+    .map((n) => n[0])
+    .slice(0, 2)
+    .join('')
+    .toUpperCase()
 
   if (url) {
     return (
       <Image
         src={url}
-        alt={name ?? 'Avatar'}
+        alt={name}
         width={32}
         height={32}
-        className="w-8 h-8 rounded-full object-cover"
+        className="w-8 h-8 rounded-full object-cover shrink-0"
       />
     )
   }
@@ -105,13 +101,8 @@ export function UsersTable({ users, total, page, search, selectedUser }: UsersTa
     updateParams({ search: searchInput, page: '1', userId: '' })
   }
 
-  function selectUser(userId: string) {
-    updateParams({ userId })
-  }
-
   return (
     <div className="flex gap-6 h-full">
-      {/* Table container */}
       <div className="flex-1 min-w-0 space-y-4">
         {/* Search */}
         <form onSubmit={handleSearch} className="flex gap-2">
@@ -119,7 +110,7 @@ export function UsersTable({ users, total, page, search, selectedUser }: UsersTa
             type="search"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            placeholder="Rechercher par nom ou email…"
+            placeholder="Rechercher par nom…"
             className="flex-1 px-4 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#1D9E75] focus:border-transparent"
           />
           <button
@@ -148,7 +139,6 @@ export function UsersTable({ users, total, page, search, selectedUser }: UsersTa
           {search && ` pour « ${search} »`}
         </p>
 
-        {/* Table */}
         <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
           <table className="w-full text-sm">
             <thead>
@@ -157,10 +147,13 @@ export function UsersTable({ users, total, page, search, selectedUser }: UsersTa
                   Utilisateur
                 </th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">
-                  Email
+                  Téléphone
                 </th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">
-                  Plateforme
+                  Niveau
+                </th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">
+                  Note
                 </th>
                 <th className="text-left px-4 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">
                   Inscription
@@ -173,7 +166,7 @@ export function UsersTable({ users, total, page, search, selectedUser }: UsersTa
             <tbody className="divide-y divide-gray-50">
               {users.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="px-4 py-10 text-center text-gray-400 text-sm">
+                  <td colSpan={6} className="px-4 py-10 text-center text-gray-400 text-sm">
                     Aucun utilisateur trouvé
                   </td>
                 </tr>
@@ -183,26 +176,33 @@ export function UsersTable({ users, total, page, search, selectedUser }: UsersTa
                   return (
                     <tr
                       key={user.id}
-                      onClick={() => selectUser(user.id)}
-                      className={`cursor-pointer transition-colors ${
-                        isSelected
-                          ? 'bg-[#e8f7f1]'
-                          : 'hover:bg-gray-50'
-                      }`}
+                      onClick={() => updateParams({ userId: user.id })}
+                      className={`cursor-pointer transition-colors ${isSelected ? 'bg-[#e8f7f1]' : 'hover:bg-gray-50'}`}
                     >
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
-                          <Avatar url={user.avatar_url} name={user.display_name} />
-                          <span className="font-medium text-gray-900 truncate max-w-[120px]">
-                            {user.display_name ?? <span className="text-gray-400 italic">Sans nom</span>}
-                          </span>
+                          <Avatar url={user.photo_url} name={user.display_name} />
+                          <div className="min-w-0">
+                            <span className="font-medium text-gray-900 truncate block max-w-[120px]">
+                              {user.display_name}
+                            </span>
+                            {user.is_banned && (
+                              <span className="text-xs text-red-500 font-medium">Banni</span>
+                            )}
+                            {user.is_deleted && (
+                              <span className="text-xs text-gray-400 font-medium">Supprimé</span>
+                            )}
+                          </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-gray-500 truncate max-w-[180px] hidden md:table-cell">
-                        {user.email ?? '—'}
+                      <td className="px-4 py-3 text-gray-500 hidden md:table-cell">
+                        {user.phone}
                       </td>
                       <td className="px-4 py-3 hidden lg:table-cell">
-                        <PlatformBadge platform={user.platform} />
+                        <LevelBadge level={user.level} />
+                      </td>
+                      <td className="px-4 py-3 hidden lg:table-cell">
+                        <Stars avg={user.rating_avg} count={user.rating_count} />
                       </td>
                       <td className="px-4 py-3 text-gray-500 hidden lg:table-cell">
                         {formatDate(user.created_at)}
@@ -218,7 +218,6 @@ export function UsersTable({ users, total, page, search, selectedUser }: UsersTa
           </table>
         </div>
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="flex items-center justify-between">
             <button
@@ -242,14 +241,14 @@ export function UsersTable({ users, total, page, search, selectedUser }: UsersTa
         )}
       </div>
 
-      {/* User detail panel */}
+      {/* Panneau détail */}
       {selectedUser && (
         <aside className="w-72 shrink-0">
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden sticky top-0">
             <div className="h-24 bg-gradient-to-br from-[#1D9E75] to-[#157a5a]" />
             <div className="px-5 pb-5">
               <div className="-mt-8 mb-4 flex items-end justify-between">
-                <Avatar url={selectedUser.avatar_url} name={selectedUser.display_name} />
+                <Avatar url={selectedUser.photo_url} name={selectedUser.display_name} />
                 <button
                   onClick={() => updateParams({ userId: '' })}
                   className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -261,27 +260,48 @@ export function UsersTable({ users, total, page, search, selectedUser }: UsersTa
                 </button>
               </div>
 
-              <h3 className="font-bold text-gray-900 text-base">
-                {selectedUser.display_name ?? <span className="text-gray-400 italic">Sans nom</span>}
-              </h3>
-              {selectedUser.email && (
-                <p className="text-sm text-gray-500 mt-0.5 break-all">{selectedUser.email}</p>
+              <h3 className="font-bold text-gray-900 text-base">{selectedUser.display_name}</h3>
+              <p className="text-sm text-gray-500 mt-0.5">{selectedUser.phone}</p>
+
+              {(selectedUser.is_banned || selectedUser.is_deleted) && (
+                <div className="mt-2 flex gap-2">
+                  {selectedUser.is_banned && (
+                    <span className="text-xs bg-red-50 text-red-600 font-medium px-2 py-0.5 rounded-full">
+                      Banni
+                    </span>
+                  )}
+                  {selectedUser.is_deleted && (
+                    <span className="text-xs bg-gray-100 text-gray-500 font-medium px-2 py-0.5 rounded-full">
+                      Supprimé
+                    </span>
+                  )}
+                </div>
               )}
 
               <dl className="mt-5 space-y-3">
                 <div>
                   <dt className="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-0.5">
-                    Plateforme
+                    Niveau
                   </dt>
                   <dd>
-                    <PlatformBadge platform={selectedUser.platform} />
+                    <LevelBadge level={selectedUser.level} />
                   </dd>
                 </div>
                 <div>
                   <dt className="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-0.5">
-                    Membre depuis
+                    Note moyenne
                   </dt>
-                  <dd className="text-sm text-gray-700">{formatDate(selectedUser.created_at)}</dd>
+                  <dd>
+                    <Stars avg={selectedUser.rating_avg} count={selectedUser.rating_count} />
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-0.5">
+                    Langues
+                  </dt>
+                  <dd className="text-sm text-gray-700">
+                    {selectedUser.languages?.join(', ') || '—'}
+                  </dd>
                 </div>
                 <div>
                   <dt className="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-0.5">
@@ -290,6 +310,12 @@ export function UsersTable({ users, total, page, search, selectedUser }: UsersTa
                   <dd className="text-2xl font-extrabold text-gray-900">
                     {selectedUser.hike_count}
                   </dd>
+                </div>
+                <div>
+                  <dt className="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-0.5">
+                    Membre depuis
+                  </dt>
+                  <dd className="text-sm text-gray-700">{formatDate(selectedUser.created_at)}</dd>
                 </div>
                 <div>
                   <dt className="text-xs text-gray-400 uppercase tracking-wider font-semibold mb-0.5">

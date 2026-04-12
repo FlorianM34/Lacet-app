@@ -26,6 +26,32 @@ const navItems = [
       </svg>
     ),
   },
+  {
+    label: 'Randonnées',
+    href: '/admin/dashboard/hikes',
+    icon: (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M3 21l4-4m0 0l7-7m-7 7l-1.5-1.5M14 10l3-3m0 0l3-3m-3 3l-3 3M7 17l-4 4"
+        />
+      </svg>
+    ),
+  },
+  {
+    label: 'Carte',
+    href: '/admin/dashboard/map',
+    icon: (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+        />
+      </svg>
+    ),
+  },
 ]
 
 export function SidebarNav() {

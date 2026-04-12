@@ -1,9 +1,27 @@
-import { NextResponse } from 'next/server'
+import { createServerClient } from '@supabase/ssr'
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET() {
-  const response = NextResponse.redirect(
-    new URL('/admin', process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
+export async function GET(request: NextRequest) {
+  const redirectUrl = new URL('/admin', process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000')
+  const response = NextResponse.redirect(redirectUrl)
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll()
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options),
+          )
+        },
+      },
+    },
   )
-  response.cookies.delete('admin_session')
+
+  await supabase.auth.signOut()
   return response
 }

@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "standalone",
+  transpilePackages: ['mapbox-gl'],
   images: {
     unoptimized: true,
     remotePatterns: [

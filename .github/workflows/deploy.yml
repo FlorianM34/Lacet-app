@@ -1,0 +1,92 @@
+name: Deploy
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+env:
+  REGISTRY: rg.fr-par.scw.cloud
+  REGISTRY_NAMESPACE: lacet
+  IMAGE_NAME: container-lacet
+  SCW_REGION: fr-par
+  SCW_PROJECT_ID: 1986ec3a-2ad2-4d59-9623-2b73962f028f
+  SCW_CONTAINER_NAMESPACE: lacet
+  SCW_CONTAINER_NAME: container-lacet
+
+jobs:
+  build-and-deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Scaleway Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: rg.fr-par.scw.cloud
+          username: nologin
+          password: ${{ secrets.SCW_SECRET_KEY }}
+
+      - name: Extract version tag
+        id: meta
+        run: echo "TAG=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            rg.fr-par.scw.cloud/lacet/container-lacet:${{ steps.meta.outputs.TAG }}
+            rg.fr-par.scw.cloud/lacet/container-lacet:latest
+          build-args: |
+            NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+            NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+            NEXT_PUBLIC_SITE_URL=${{ secrets.NEXT_PUBLIC_SITE_URL }}
+            NEXT_PUBLIC_MAPBOX_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Install Scaleway CLI
+        run: |
+          wget -q https://github.com/scaleway/scaleway-cli/releases/latest/download/scaleway-cli_linux_amd64 \
+            -O /usr/local/bin/scw
+          chmod +x /usr/local/bin/scw
+
+      - name: Deploy to Scaleway Serverless Containers
+        env:
+          SCW_ACCESS_KEY: ${{ secrets.SCW_ACCESS_KEY }}
+          SCW_SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
+          SCW_DEFAULT_PROJECT_ID: ${{ env.SCW_PROJECT_ID }}
+          SCW_DEFAULT_REGION: ${{ env.SCW_REGION }}
+        run: |
+          # Récupère l'ID du namespace serverless
+          NAMESPACE_ID=$(scw container namespace list \
+            name=${{ env.SCW_CONTAINER_NAMESPACE }} \
+            project-id=${{ env.SCW_PROJECT_ID }} \
+            -o json | jq -r '.[0].id')
+
+          echo "Namespace ID: $NAMESPACE_ID"
+
+          # Récupère l'ID du container
+          CONTAINER_ID=$(scw container container list \
+            namespace-id=$NAMESPACE_ID \
+            name=${{ env.SCW_CONTAINER_NAME }} \
+            -o json | jq -r '.[0].id')
+
+          echo "Container ID: $CONTAINER_ID"
+
+          # Met à jour l'image
+          scw container container update $CONTAINER_ID \
+            registry-image=rg.fr-par.scw.cloud/lacet/container-lacet:${{ steps.meta.outputs.TAG }}
+
+          # Déclenche le déploiement
+          scw container container deploy $CONTAINER_ID
+
+          echo "✓ Déployé : rg.fr-par.scw.cloud/lacet/container-lacet:${{ steps.meta.outputs.TAG }}"
