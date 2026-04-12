@@ -3,6 +3,13 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+  const hostname = request.headers.get('host') || ''
+
+  if (hostname.startsWith('invite.')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/invite'
+    return NextResponse.rewrite(url)
+  }
 
   if (pathname.startsWith('/admin/dashboard')) {
     let response = NextResponse.next({ request })
@@ -42,5 +49,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/dashboard/:path*'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 }
