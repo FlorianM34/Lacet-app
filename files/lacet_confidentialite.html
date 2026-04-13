@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Politique de confidentialité — Lacet</title>
+<style>
+  :root {
+    --green: #1D9E75;
+    --green-dark: #085041;
+    --green-light: #E1F5EE;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --bg: #ffffff;
+    --bg-alt: #f9fafb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+  a { color: var(--green); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  header { border-bottom: 1px solid var(--border); padding: 0 24px; }
+  .header-inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .logo { font-size: 20px; font-weight: 600; color: var(--green-dark); letter-spacing: -0.3px; }
+  .nav-links { display: flex; gap: 24px; font-size: 14px; }
+  .nav-links a { color: var(--muted); }
+  .nav-links a.active { color: var(--green); font-weight: 500; }
+
+  .hero { background: var(--green-light); padding: 56px 24px 48px; text-align: center; border-bottom: 1px solid #c8e6d4; }
+  .hero h1 { font-size: 32px; font-weight: 700; color: var(--green-dark); margin-bottom: 12px; }
+  .hero-meta { font-size: 13px; color: #0F6E56; margin-top: 12px; }
+
+  .content { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  .toc { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px; margin-bottom: 48px; }
+  .toc h2 { font-size: 13px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .toc ol { padding-left: 20px; }
+  .toc li { font-size: 14px; margin-bottom: 8px; }
+  .toc a { color: var(--text); }
+  .toc a:hover { color: var(--green); }
+
+  .section { margin-bottom: 48px; scroll-margin-top: 24px; }
+  .section h2 { font-size: 20px; font-weight: 600; color: var(--green-dark); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px solid var(--green-light); }
+  .section h3 { font-size: 15px; font-weight: 600; margin: 24px 0 10px; }
+  .section p { font-size: 15px; color: #374151; margin-bottom: 14px; }
+  .section ul, .section ol { padding-left: 22px; margin-bottom: 14px; }
+  .section li { font-size: 15px; color: #374151; margin-bottom: 8px; }
+
+  .data-table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 14px; }
+  .data-table th { background: var(--green-light); color: var(--green-dark); font-weight: 600; padding: 10px 14px; text-align: left; border-bottom: 2px solid #9FE1CB; }
+  .data-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: #374151; vertical-align: top; }
+  .data-table tr:last-child td { border-bottom: none; }
+
+  .highlight-box { background: var(--green-light); border-left: 3px solid var(--green); border-radius: 0 8px 8px 0; padding: 16px 20px; margin: 20px 0; }
+  .highlight-box p { color: var(--green-dark); margin-bottom: 0; font-size: 14px; }
+
+  .rights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 16px 0; }
+  .right-card { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .right-card h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
+  .right-card p { font-size: 13px; color: var(--muted); margin-bottom: 0; }
+
+  .contact-section { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 16px; padding: 32px; text-align: center; margin-top: 48px; }
+  .contact-section h2 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+  .contact-section p { font-size: 14px; color: var(--muted); margin-bottom: 16px; }
+  .contact-btn { display: inline-block; background: var(--green); color: white; padding: 12px 28px; border-radius: 24px; font-size: 14px; font-weight: 500; }
+
+  footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; font-size: 13px; color: var(--muted); }
+  footer a { color: var(--muted); margin: 0 12px; }
+  footer a:hover { color: var(--green); }
+
+  @media (max-width: 600px) {
+    .rights-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <span class="logo">lacet</span>
+    <nav class="nav-links">
+      <a href="support.html">Support</a>
+      <a href="confidentialite.html" class="active">Confidentialité</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Politique de confidentialité</h1>
+  <p class="hero-meta">Dernière mise à jour : 13 avril 2025</p>
+</div>
+
+<div class="content">
+
+  <div class="toc">
+    <h2>Sommaire</h2>
+    <ol>
+      <li><a href="#qui">Qui sommes-nous ?</a></li>
+      <li><a href="#collecte">Données collectées</a></li>
+      <li><a href="#finalites">Finalités et bases légales</a></li>
+      <li><a href="#conservation">Durée de conservation</a></li>
+      <li><a href="#partage">Partage des données</a></li>
+      <li><a href="#hebergement">Hébergement et transferts</a></li>
+      <li><a href="#droits">Tes droits</a></li>
+      <li><a href="#mineurs">Mineurs</a></li>
+      <li><a href="#modifications">Modifications</a></li>
+      <li><a href="#contact">Nous contacter</a></li>
+    </ol>
+  </div>
+
+  <div class="highlight-box">
+    <p>Lacet est une application de mise en relation de randonneurs. Nous collectons uniquement les données nécessaires au fonctionnement du service. Nous ne vendons jamais tes données et nous n'affichons pas de publicité.</p>
+  </div>
+
+  <div class="section" id="qui">
+    <h2>1. Qui sommes-nous ?</h2>
+    <p>Lacet est une application mobile éditée par [Nom de l'entité juridique], dont le siège social est situé à [Adresse]. Pour toute question relative à la protection de tes données, tu peux nous contacter à l'adresse <a href="mailto:privacy@lacet.app">privacy@lacet.app</a>.</p>
+    <p>Dans le cadre du Règlement Général sur la Protection des Données (RGPD), nous agissons en qualité de responsable du traitement.</p>
+  </div>
+
+  <div class="section" id="collecte">
+    <h2>2. Données collectées</h2>
+    <p>Nous collectons uniquement les données strictement nécessaires au fonctionnement de Lacet.</p>
+
+    <h3>Données fournies directement par toi</h3>
+    <table class="data-table">
+      <thead><tr><th>Donnée</th><th>Obligatoire</th><th>Utilisation</th></tr></thead>
+      <tbody>
+        <tr><td>Numéro de téléphone</td><td>Oui</td><td>Authentification par OTP SMS</td></tr>
+        <tr><td>Prénom et initiale du nom</td><td>Oui</td><td>Identification dans les groupes</td></tr>
+        <tr><td>Date de naissance</td><td>Oui</td><td>Calcul et affichage de l'âge</td></tr>
+        <tr><td>Niveau d'expérience</td><td>Oui</td><td>Filtrage et compatibilité des randonnées</td></tr>
+        <tr><td>Langues parlées</td><td>Oui</td><td>Mise en relation avec des groupes compatibles</td></tr>
+        <tr><td>Photo de profil</td><td>Non</td><td>Identification visuelle dans les groupes</td></tr>
+        <tr><td>Option voiturage</td><td>Oui</td><td>Affichage sur le profil et les annonces</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Données générées par l'utilisation</h3>
+    <table class="data-table">
+      <thead><tr><th>Donnée</th><th>Utilisation</th></tr></thead>
+      <tbody>
+        <tr><td>Itinéraires créés (titre, tracé GPX, date, niveau)</td><td>Publication dans le feed et gestion des groupes</td></tr>
+        <tr><td>Participations aux randonnées</td><td>Gestion des groupes, calcul des statistiques personnelles</td></tr>
+        <tr><td>Messages de chat</td><td>Communication au sein des groupes</td></tr>
+        <tr><td>Notes reçues et émises</td><td>Calcul de la réputation, affichage sur le profil</td></tr>
+        <tr><td>Position géographique approximative</td><td>Affichage des randonnées à proximité (collectée à la demande, non stockée en continu)</td></tr>
+        <tr><td>Token de notification push</td><td>Envoi des notifications liées à l'activité (nouveaux membres, messages, rappels)</td></tr>
+        <tr><td>Préférences de notifications et d'affichage</td><td>Personnalisation de l'expérience</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Données collectées automatiquement</h3>
+    <p>Nous collectons des données techniques minimales pour assurer le bon fonctionnement de l'application : version de l'application installée, identifiant de session, logs d'erreurs techniques. Ces données ne permettent pas de t'identifier directement et sont conservées 30 jours.</p>
+  </div>
+
+  <div class="section" id="finalites">
+    <h2>3. Finalités et bases légales</h2>
+    <table class="data-table">
+      <thead><tr><th>Finalité</th><th>Base légale (RGPD)</th></tr></thead>
+      <tbody>
+        <tr><td>Création et gestion de ton compte</td><td>Exécution du contrat (art. 6.1.b)</td></tr>
+        <tr><td>Mise en relation avec d'autres randonneurs</td><td>Exécution du contrat (art. 6.1.b)</td></tr>
+        <tr><td>Affichage des randonnées à proximité</td><td>Consentement (art. 6.1.a) — demandé à l'utilisation</td></tr>
+        <tr><td>Envoi de notifications push</td><td>Consentement (art. 6.1.a) — demandé à l'installation</td></tr>
+        <tr><td>Calcul de la réputation et des badges</td><td>Exécution du contrat (art. 6.1.b)</td></tr>
+        <tr><td>Modération et sécurité de la plateforme</td><td>Intérêt légitime (art. 6.1.f)</td></tr>
+        <tr><td>Amélioration du service via logs techniques</td><td>Intérêt légitime (art. 6.1.f)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section" id="conservation">
+    <h2>4. Durée de conservation</h2>
+    <table class="data-table">
+      <thead><tr><th>Donnée</th><th>Durée de conservation</th></tr></thead>
+      <tbody>
+        <tr><td>Données de profil</td><td>Jusqu'à la suppression du compte + 30 jours (délai de sauvegarde)</td></tr>
+        <tr><td>Messages de chat</td><td>Jusqu'à la suppression du compte</td></tr>
+        <tr><td>Itinéraires créés</td><td>Anonymisés à la suppression du compte, conservés pour ne pas affecter les groupes existants</td></tr>
+        <tr><td>Notes et avis</td><td>Supprimés à la suppression du compte</td></tr>
+        <tr><td>Logs techniques</td><td>30 jours glissants</td></tr>
+        <tr><td>Données de signalement</td><td>1 an à compter du signalement</td></tr>
+      </tbody>
+    </table>
+    <p>En cas de suppression de ton compte, l'ensemble de tes données personnelles est effacé dans un délai de 30 jours, à l'exception des données pour lesquelles nous avons une obligation légale de conservation.</p>
+  </div>
+
+  <div class="section" id="partage">
+    <h2>5. Partage des données</h2>
+    <p>Nous ne vendons jamais tes données personnelles à des tiers.</p>
+
+    <h3>Données visibles par les autres utilisateurs</h3>
+    <p>Sur ton profil public, les autres utilisateurs peuvent voir : ton prénom, ton âge, ton niveau d'expérience, tes langues, ta photo (si renseignée), ta note moyenne, le nombre de randonnées effectuées, et tes badges. Ton numéro de téléphone n'est jamais visible.</p>
+
+    <h3>Sous-traitants techniques</h3>
+    <table class="data-table">
+      <thead><tr><th>Sous-traitant</th><th>Rôle</th><th>Localisation</th></tr></thead>
+      <tbody>
+        <tr><td>Supabase</td><td>Base de données, authentification, stockage des fichiers</td><td>Union européenne (AWS Frankfurt)</td></tr>
+        <tr><td>Twilio</td><td>Envoi des SMS OTP d'authentification</td><td>États-Unis (couvert par les clauses contractuelles types)</td></tr>
+        <tr><td>Expo (Expo Push Notification Service)</td><td>Envoi des notifications push</td><td>États-Unis (couvert par les clauses contractuelles types)</td></tr>
+        <tr><td>Mapbox</td><td>Affichage des cartes et tracés</td><td>États-Unis (couvert par les clauses contractuelles types)</td></tr>
+      </tbody>
+    </table>
+    <p>Chacun de ces sous-traitants est lié par un contrat de traitement des données conforme au RGPD.</p>
+  </div>
+
+  <div class="section" id="hebergement">
+    <h2>6. Hébergement et transferts hors UE</h2>
+    <p>Les données sont principalement hébergées dans l'Union européenne (Supabase sur AWS Frankfurt). Certains sous-traitants (Twilio, Expo, Mapbox) sont établis aux États-Unis. Ces transferts sont encadrés par les Clauses Contractuelles Types (CCT) de la Commission européenne, conformément à l'article 46 du RGPD.</p>
+  </div>
+
+  <div class="section" id="droits">
+    <h2>7. Tes droits</h2>
+    <p>Conformément au RGPD, tu disposes des droits suivants sur tes données personnelles :</p>
+
+    <div class="rights-grid">
+      <div class="right-card">
+        <h4>Droit d'accès</h4>
+        <p>Obtenir une copie de toutes les données que nous détenons sur toi.</p>
+      </div>
+      <div class="right-card">
+        <h4>Droit de rectification</h4>
+        <p>Corriger toute donnée inexacte ou incomplète depuis les paramètres de l'app.</p>
+      </div>
+      <div class="right-card">
+        <h4>Droit à l'effacement</h4>
+        <p>Supprimer ton compte et toutes tes données depuis Paramètres → "Supprimer mon compte".</p>
+      </div>
+      <div class="right-card">
+        <h4>Droit à la portabilité</h4>
+        <p>Recevoir tes données dans un format structuré et lisible par machine.</p>
+      </div>
+      <div class="right-card">
+        <h4>Droit d'opposition</h4>
+        <p>T'opposer à un traitement basé sur notre intérêt légitime.</p>
+      </div>
+      <div class="right-card">
+        <h4>Droit au retrait du consentement</h4>
+        <p>Retirer à tout moment ton consentement (géolocalisation, notifications) depuis les Paramètres.</p>
+      </div>
+    </div>
+
+    <p style="margin-top: 20px;">Pour exercer ces droits, contacte-nous à <a href="mailto:privacy@lacet.app">privacy@lacet.app</a>. Nous répondons dans un délai d'un mois. En cas de réponse insatisfaisante, tu peux introduire une réclamation auprès de la <a href="https://www.cnil.fr" target="_blank">CNIL</a> (Commission Nationale de l'Informatique et des Libertés).</p>
+  </div>
+
+  <div class="section" id="mineurs">
+    <h2>8. Mineurs</h2>
+    <p>Lacet est une application destinée aux personnes âgées d'au moins 16 ans. Nous ne collectons pas sciemment de données concernant des personnes de moins de 16 ans. Si tu constates qu'un mineur a créé un compte, contacte-nous à <a href="mailto:privacy@lacet.app">privacy@lacet.app</a> pour que nous procédions à la suppression du compte dans les meilleurs délais.</p>
+  </div>
+
+  <div class="section" id="modifications">
+    <h2>9. Modifications de cette politique</h2>
+    <p>Nous pouvons être amenés à modifier cette politique de confidentialité pour refléter des évolutions légales ou des changements dans notre service. En cas de modification substantielle, tu seras notifié par une notification push ou un message dans l'application au moins 30 jours avant l'entrée en vigueur des changements.</p>
+    <p>La version en vigueur est toujours accessible à l'adresse <strong>lacet.app/confidentialite</strong>. La date de dernière mise à jour est indiquée en haut de cette page.</p>
+  </div>
+
+  <div class="contact-section" id="contact">
+    <h2>10. Nous contacter</h2>
+    <p>Pour toute question relative à la protection de tes données personnelles :</p>
+    <a class="contact-btn" href="mailto:privacy@lacet.app">privacy@lacet.app</a>
+    <p style="font-size:13px;color:var(--muted);margin-top:16px;">Ou par courrier : [Nom de l'entité], [Adresse complète], France</p>
+  </div>
+
+</div>
+
+<footer>
+  <a href="support.html">Support</a>
+  <a href="confidentialite.html">Confidentialité</a>
+  <a href="cgu.html">CGU</a>
+  <span style="margin-left:12px">© 2025 Lacet</span>
+</footer>
+
+</body>
+</html>

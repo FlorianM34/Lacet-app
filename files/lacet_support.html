@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support — Lacet</title>
+<style>
+  :root {
+    --green: #1D9E75;
+    --green-dark: #085041;
+    --green-light: #E1F5EE;
+    --text: #1a1a1a;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --bg: #ffffff;
+    --bg-alt: #f9fafb;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+  a { color: var(--green); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  header { border-bottom: 1px solid var(--border); padding: 0 24px; }
+  .header-inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 60px; }
+  .logo { font-size: 20px; font-weight: 600; color: var(--green-dark); letter-spacing: -0.3px; }
+  .nav-links { display: flex; gap: 24px; font-size: 14px; color: var(--muted); }
+  .nav-links a { color: var(--muted); }
+  .nav-links a.active { color: var(--green); font-weight: 500; }
+
+  .hero { background: var(--green-light); padding: 56px 24px 48px; text-align: center; border-bottom: 1px solid #c8e6d4; }
+  .hero h1 { font-size: 32px; font-weight: 700; color: var(--green-dark); margin-bottom: 12px; }
+  .hero p { font-size: 16px; color: #0F6E56; max-width: 480px; margin: 0 auto; }
+
+  .content { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  .faq-section { margin-bottom: 48px; }
+  .faq-section h2 { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green); margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--green-light); }
+
+  .faq-item { margin-bottom: 0; border-bottom: 1px solid var(--border); }
+  .faq-q { font-size: 15px; font-weight: 500; color: var(--text); padding: 18px 0 18px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 12px; user-select: none; }
+  .faq-q:hover { color: var(--green); }
+  .faq-arrow { font-size: 18px; color: var(--muted); transition: transform 0.2s; flex-shrink: 0; }
+  .faq-a { font-size: 14px; color: var(--muted); padding-bottom: 18px; display: none; line-height: 1.7; }
+  .faq-a ul { padding-left: 20px; margin-top: 8px; }
+  .faq-a li { margin-bottom: 6px; }
+  .faq-item.open .faq-a { display: block; }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); }
+
+  .contact-card { background: var(--bg-alt); border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin-top: 48px; text-align: center; }
+  .contact-card h2 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+  .contact-card p { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+  .contact-btn { display: inline-block; background: var(--green); color: white; padding: 12px 28px; border-radius: 24px; font-size: 14px; font-weight: 500; }
+  .contact-btn:hover { background: var(--green-dark); text-decoration: none; }
+  .contact-detail { font-size: 13px; color: var(--muted); margin-top: 12px; }
+
+  footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; font-size: 13px; color: var(--muted); }
+  footer a { color: var(--muted); margin: 0 12px; }
+  footer a:hover { color: var(--green); }
+
+  @media (max-width: 600px) {
+    .hero h1 { font-size: 26px; }
+    .nav-links { gap: 16px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <span class="logo">lacet</span>
+    <nav class="nav-links">
+      <a href="support.html" class="active">Support</a>
+      <a href="confidentialite.html">Confidentialité</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Centre d'aide</h1>
+  <p>Retrouve les réponses aux questions les plus fréquentes sur Lacet.</p>
+</div>
+
+<div class="content">
+
+  <div class="faq-section">
+    <h2>Démarrer avec Lacet</h2>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">Comment créer un compte ?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Lacet utilise uniquement ton numéro de téléphone pour créer un compte. Télécharge l'app, saisis ton numéro, reçois un code SMS à 6 chiffres, valide — c'est tout. Aucun mot de passe, aucun email requis.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">Comment fonctionne le feed de randonnées ?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Le feed affiche les randonnées proposées par d'autres utilisateurs dans un rayon autour de toi. Swipe à droite pour rejoindre, à gauche pour passer. Tu peux filtrer par distance, date et niveau depuis le bouton "Filtres" en haut de l'écran.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">Comment proposer ma propre randonnée ?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Appuie sur l'onglet "+" en bas de l'écran. Tu peux importer un fichier GPX depuis Komoot, AllTrails ou Wikiloc, ou dessiner ton itinéraire directement sur la carte. Remplis ensuite les informations (date, niveau, nombre de places) et publie.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">Qu'est-ce qu'un fichier GPX ?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Un fichier GPX contient les coordonnées GPS de ton itinéraire. Tu peux en exporter depuis les applications de randonnée populaires :
+        <ul>
+          <li><strong>Komoot</strong> : ouvre ta rando → "Exporter" → "GPX"</li>
+          <li><strong>AllTrails</strong> : ouvre la randonnée → icône de partage → "Exporter GPX"</li>
+          <li><strong>Wikiloc</strong> : ouvre le parcours → "Télécharger le tracé"</li>
+        </ul>
+        Si tu n'as pas de fichier GPX, l'option "Dessiner sur la carte" est disponible.
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <h2>Groupes et chat</h2>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">Comment rejoindre une randonnée ?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Swipe à droite sur une carte dans le feed, ou appuie sur le bouton vert. Si l'organisateur a activé la validation manuelle, ta demande lui sera envoyée et tu seras notifié de sa décision. Si l'acceptation est automatique, tu rejoins le groupe immédiatement.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">Puis-je quitter un groupe après avoir rejoint ?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Oui. Depuis la fiche de la randonnée, appuie sur "Quitter le groupe". Les autres membres pourront éventuellement te laisser une note suite à ton départ. Une place se libère automatiquement dans le feed.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">Combien de randonnées puis-je rejoindre simultanément ?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Tu peux participer à 3 randonnées à venir en même temps, demandes en attente incluses. Cette limite permet de garder une vraie disponibilité pour chaque groupe.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">Les messages du chat sont-ils permanents ?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Le chat reste accessible après la randonnée. Le groupe peut continuer à échanger et organiser de nouvelles sorties ensemble. Les messages ne sont pas supprimés automatiquement.</div>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <h2>Profil et notation</h2>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">Comment fonctionne le système de notation ?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">24 heures après le début d'une randonnée, un message apparaît dans le chat pour inviter chaque participant à noter les autres (1 à 5 étoiles). Les notes sont anonymes jusqu'à leur révélation simultanée — elles sont dévoilées quand tout le groupe a répondu, ou automatiquement après 48 heures.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">Puis-je modifier mon profil ?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Oui, depuis l'onglet Profil → "Modifier mon profil". Tu peux changer ton prénom, ton niveau d'expérience, tes langues parlées, ton option de voiturage, et ta photo (optionnelle).</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">Comment sont attribués les badges ?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Les badges sont attribués automatiquement selon ton activité sur Lacet :
+        <ul>
+          <li><strong>Distance</strong> : Randonneur (50 km), Explorateur (200 km), Baroudeur (500 km)</li>
+          <li><strong>Randonnées</strong> : Première sortie (1), Habitué (10), Vétéran (30)</li>
+          <li><strong>Organisateur</strong> : Initiateur (1), Guide (5), Chef de cordée (15)</li>
+        </ul>
+        Tu reçois une notification dès qu'un nouveau badge est débloqué.
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-section">
+    <h2>Sécurité et modération</h2>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">Comment signaler un utilisateur ?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Depuis le profil d'un utilisateur ou depuis le chat, appuie sur les trois points "···" puis "Signaler". Choisis le motif (comportement inapproprié, fausse identité, spam, autre) et confirme. Chaque signalement est examiné par notre équipe.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">Mon numéro de téléphone est-il visible par les autres ?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Non. Ton numéro de téléphone est uniquement utilisé pour l'authentification. Il n'est jamais affiché sur ton profil public ni partagé avec d'autres utilisateurs.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggle(this)">Comment supprimer mon compte ?<span class="faq-arrow">›</span></div>
+      <div class="faq-a">Va dans Profil → Paramètres → "Supprimer mon compte". Tape "SUPPRIMER" pour confirmer. Toutes tes données personnelles sont définitivement effacées. Cette action est irréversible.</div>
+    </div>
+  </div>
+
+  <div class="contact-card">
+    <h2>Tu n'as pas trouvé ta réponse ?</h2>
+    <p>Notre équipe répond généralement sous 24 à 48 heures.</p>
+    <a class="contact-btn" href="mailto:support@lacet.app">Contacter le support</a>
+    <p class="contact-detail">support@lacet.app</p>
+  </div>
+
+</div>
+
+<footer>
+  <a href="support.html">Support</a>
+  <a href="confidentialite.html">Confidentialité</a>
+  <a href="cgu.html">CGU</a>
+  <span style="margin-left:12px">© 2025 Lacet</span>
+</footer>
+
+<script>
+function toggle(el) {
+  const item = el.parentElement;
+  item.classList.toggle('open');
+}
+</script>
+</body>
+</html>
