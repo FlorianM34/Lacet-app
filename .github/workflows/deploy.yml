@@ -60,14 +60,23 @@ jobs:
     steps:
       - name: Install Scaleway CLI
         run: |
-          VERSION=$(curl -s https://api.github.com/repos/scaleway/scaleway-cli/releases/latest \
-            | jq -r '.tag_name' | sed 's/^v//')
-          echo "Installing scw v${VERSION}"
-          curl -fsSL \
-            "https://github.com/scaleway/scaleway-cli/releases/download/v${VERSION}/scw_${VERSION}_linux_amd64" \
-            -o /tmp/scw
-          chmod +x /tmp/scw
-          sudo mv /tmp/scw /usr/local/bin/scw
+          RELEASE=$(curl -s https://api.github.com/repos/scaleway/scaleway-cli/releases/latest)
+          VERSION=$(echo "$RELEASE" | jq -r '.tag_name')
+          ASSET_URL=$(echo "$RELEASE" | jq -r '
+            .assets[]
+            | select(.name | ascii_downcase | (contains("linux") and contains("amd64")))
+            | .browser_download_url
+          ' | head -1)
+          echo "Installing Scaleway CLI ${VERSION}"
+          echo "Asset: ${ASSET_URL}"
+          curl -fsSL "${ASSET_URL}" -o /tmp/scw_asset
+          if file /tmp/scw_asset | grep -q "compressed\|tar"; then
+            tar -xzf /tmp/scw_asset -C /tmp/
+            sudo mv /tmp/scw /usr/local/bin/scw
+          else
+            chmod +x /tmp/scw_asset
+            sudo mv /tmp/scw_asset /usr/local/bin/scw
+          fi
           scw version
 
       - name: Deploy to Scaleway Serverless Container
