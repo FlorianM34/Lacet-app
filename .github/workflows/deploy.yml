@@ -85,6 +85,7 @@ jobs:
           SCW_SECRET_KEY: ${{ secrets.SCW_SECRET_KEY }}
           SCW_DEFAULT_PROJECT_ID: ${{ vars.SCW_PROJECT_ID }}
           SCW_DEFAULT_REGION: ${{ vars.SCW_REGION }}
+          SCW_DEFAULT_ORGANIZATION_ID: ${{ vars.SCW_DEFAULT_ORGANIZATION_ID }}
         run: |
           IMAGE="${{ vars.SCW_REGISTRY }}/${{ vars.SCW_REGISTRY_NAMESPACE }}/${{ vars.SCW_IMAGE_NAME }}:${{ needs.build-and-push.outputs.tag_version }}"
 
