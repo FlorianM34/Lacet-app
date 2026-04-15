@@ -1,4 +1,11 @@
 import Image from 'next/image'
+import { Dancing_Script } from 'next/font/google'
+
+const dancingScript = Dancing_Script({
+  subsets: ['latin'],
+  weight: ['700'],
+  display: 'swap',
+})
 
 interface LogoProps {
   size?: number
@@ -23,7 +30,8 @@ export function Logo({ className = '' }: { className?: string }) {
     <div className={`flex items-center gap-2 ${className}`}>
       <LogoIcon size={40} />
       <span
-        style={{ fontFamily: 'Popsies, cursive', color: '#4B9C78', fontSize: '2rem', lineHeight: 1 }}
+        className={dancingScript.className}
+        style={{ color: '#4B9C78', fontSize: '2rem', lineHeight: 1 }}
         aria-label="Lacet"
       >
         lacet
