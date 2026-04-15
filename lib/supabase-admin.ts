@@ -163,6 +163,259 @@ export async function getUserById(id: string): Promise<(User & { hike_count: num
   return { ...user, hike_count: count ?? 0 }
 }
 
+type AdminRow = Record<string, unknown>
+
+export interface ReportUserSummary {
+  id: string
+  display_name: string
+  photo_url: string | null
+  phone: string | null
+}
+
+export interface ReportHikeSummary {
+  id: string
+  title: string
+  status: string | null
+  date_start: string | null
+}
+
+export interface ReportRecord {
+  id: string
+  created_at: string
+  updated_at: string | null
+  status: string
+  category: string | null
+  description: string | null
+  target_type: string
+  reporter_user_id: string | null
+  reported_user_id: string | null
+  hike_id: string | null
+  message_id: string | null
+  resolved_at: string | null
+  reporter: ReportUserSummary | null
+  reported_user: ReportUserSummary | null
+  hike: ReportHikeSummary | null
+  raw: Record<string, string>
+}
+
+function pickFirstString(row: AdminRow, keys: string[]): string | null {
+  for (const key of keys) {
+    const value = row[key]
+    if (typeof value === 'string' && value.trim()) return value
+  }
+  return null
+}
+
+function stringifyRawValue(value: unknown): string {
+  if (value === null || value === undefined) return '—'
+  if (typeof value === 'string') return value
+  if (typeof value === 'number' || typeof value === 'boolean') return String(value)
+  try {
+    return JSON.stringify(value)
+  } catch {
+    return String(value)
+  }
+}
+
+function inferReportTargetType(row: AdminRow): string {
+  const explicitType = pickFirstString(row, [
+    'target_type',
+    'entity_type',
+    'subject_type',
+    'resource_type',
+    'content_type',
+  ])
+
+  if (explicitType) return explicitType
+  if (pickFirstString(row, ['reported_user_id', 'target_user_id', 'user_target_id'])) return 'user'
+  if (pickFirstString(row, ['hike_id', 'target_hike_id'])) return 'hike'
+  if (pickFirstString(row, ['group_message_id', 'message_id', 'target_message_id'])) return 'message'
+  return 'other'
+}
+
+function serializeReportRaw(row: AdminRow): Record<string, string> {
+  return Object.fromEntries(
+    Object.entries(row).map(([key, value]) => [key, stringifyRawValue(value)]),
+  )
+}
+
+function normalizeReport(
+  row: AdminRow,
+  usersById: Record<string, ReportUserSummary>,
+  hikesById: Record<string, ReportHikeSummary>,
+): ReportRecord {
+  const targetType = inferReportTargetType(row)
+  const reporterUserId = pickFirstString(row, [
+    'reporter_user_id',
+    'reporter_id',
+    'author_user_id',
+    'created_by',
+    'created_by_user_id',
+    'sender_user_id',
+  ])
+
+  let reportedUserId = pickFirstString(row, [
+    'reported_user_id',
+    'target_user_id',
+    'user_target_id',
+    'offending_user_id',
+    'against_user_id',
+    'reported_id',
+  ])
+
+  if (!reportedUserId && targetType === 'user') {
+    reportedUserId = pickFirstString(row, ['user_id'])
+  }
+
+  const hikeId = pickFirstString(row, ['hike_id', 'target_hike_id'])
+  const messageId = pickFirstString(row, ['group_message_id', 'message_id', 'target_message_id'])
+
+  return {
+    id: pickFirstString(row, ['id']) ?? '',
+    created_at: pickFirstString(row, ['created_at']) ?? new Date(0).toISOString(),
+    updated_at: pickFirstString(row, ['updated_at', 'processed_at']) ?? null,
+    status: pickFirstString(row, ['status', 'report_status', 'moderation_status', 'state']) ?? 'new',
+    category: pickFirstString(row, ['reason', 'category', 'report_type', 'type', 'motif']),
+    description: pickFirstString(row, ['description', 'details', 'message', 'comment', 'context', 'body']),
+    target_type: targetType,
+    reporter_user_id: reporterUserId,
+    reported_user_id: reportedUserId,
+    hike_id: hikeId,
+    message_id: messageId,
+    resolved_at: pickFirstString(row, ['resolved_at', 'reviewed_at', 'closed_at', 'handled_at']),
+    reporter: reporterUserId ? usersById[reporterUserId] ?? null : null,
+    reported_user: reportedUserId ? usersById[reportedUserId] ?? null : null,
+    hike: hikeId ? hikesById[hikeId] ?? null : null,
+    raw: serializeReportRaw(row),
+  }
+}
+
+async function hydrateReports(rows: AdminRow[]): Promise<ReportRecord[]> {
+  if (rows.length === 0) return []
+
+  const db = getAdminClient()
+  const userIds = Array.from(
+    new Set(
+      rows.flatMap((row) => {
+        const targetType = inferReportTargetType(row)
+        const ids = [
+          pickFirstString(row, [
+            'reporter_user_id',
+            'reporter_id',
+            'author_user_id',
+            'created_by',
+            'created_by_user_id',
+            'sender_user_id',
+          ]),
+          pickFirstString(row, [
+            'reported_user_id',
+            'target_user_id',
+            'user_target_id',
+            'offending_user_id',
+            'against_user_id',
+            'reported_id',
+          ]),
+        ]
+
+        if (targetType === 'user') {
+          ids.push(pickFirstString(row, ['user_id']))
+        }
+
+        return ids.filter((id): id is string => Boolean(id))
+      }),
+    ),
+  )
+
+  const hikeIds = Array.from(
+    new Set(
+      rows
+        .map((row) => pickFirstString(row, ['hike_id', 'target_hike_id']))
+        .filter((id): id is string => Boolean(id)),
+    ),
+  )
+
+  const [usersResult, hikesResult] = await Promise.all([
+    userIds.length > 0
+      ? db.from('user').select('id, display_name, photo_url, phone').in('id', userIds)
+      : Promise.resolve({ data: [] as ReportUserSummary[] }),
+    hikeIds.length > 0
+      ? db.from('hike').select('id, title, status, date_start').in('id', hikeIds)
+      : Promise.resolve({ data: [] as ReportHikeSummary[] }),
+  ])
+
+  const usersById: Record<string, ReportUserSummary> = {}
+  usersResult.data?.forEach((user) => {
+    usersById[user.id] = user
+  })
+
+  const hikesById: Record<string, ReportHikeSummary> = {}
+  hikesResult.data?.forEach((hike) => {
+    hikesById[hike.id] = hike
+  })
+
+  return rows.map((row) => normalizeReport(row, usersById, hikesById))
+}
+
+function matchesReportSearch(report: ReportRecord, search: string): boolean {
+  if (!search) return true
+
+  const haystack = [
+    report.id,
+    report.status,
+    report.category ?? '',
+    report.description ?? '',
+    report.target_type,
+    report.reporter?.display_name ?? '',
+    report.reported_user?.display_name ?? '',
+    report.hike?.title ?? '',
+  ]
+    .join(' ')
+    .toLowerCase()
+
+  return haystack.includes(search.toLowerCase())
+}
+
+export async function getReports(
+  page: number,
+  search: string,
+): Promise<{ reports: ReportRecord[]; total: number }> {
+  const pageSize = 20
+  const offset = (page - 1) * pageSize
+  const db = getAdminClient()
+
+  if (search.trim()) {
+    const { data } = await db.from('report').select('*').order('created_at', { ascending: false })
+    const hydratedReports = await hydrateReports((data ?? []) as AdminRow[])
+    const filteredReports = hydratedReports.filter((report) => matchesReportSearch(report, search))
+
+    return {
+      reports: filteredReports.slice(offset, offset + pageSize),
+      total: filteredReports.length,
+    }
+  }
+
+  const { data, count } = await db
+    .from('report')
+    .select('*', { count: 'exact' })
+    .order('created_at', { ascending: false })
+    .range(offset, offset + pageSize - 1)
+
+  return {
+    reports: await hydrateReports((data ?? []) as AdminRow[]),
+    total: count ?? 0,
+  }
+}
+
+export async function getReportById(id: string): Promise<ReportRecord | null> {
+  const db = getAdminClient()
+  const { data } = await db.from('report').select('*').eq('id', id).maybeSingle()
+
+  if (!data) return null
+
+  const reports = await hydrateReports([data as AdminRow])
+  return reports[0] ?? null
+}
+
 export interface Hike {
   id: string
   title: string

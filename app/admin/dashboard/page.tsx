@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { getDashboardStats } from '@/lib/supabase-admin'
 
 export const dynamic = 'force-dynamic'
@@ -9,11 +10,13 @@ function StatCard({
   value,
   sub,
   color = 'gray',
+  href,
 }: {
   label: string
   value: string | number
   sub?: string
   color?: 'green' | 'gray' | 'red' | 'orange'
+  href?: string
 }) {
   const colors = {
     green: 'bg-[#e8f7f1] text-[#1D9E75]',
@@ -22,7 +25,7 @@ function StatCard({
     orange: 'bg-orange-50 text-orange-600',
   }
 
-  return (
+  const content = (
     <div className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
       <p className="text-sm text-gray-500 font-medium mb-3">{label}</p>
       <p className="text-3xl font-extrabold text-gray-900">
@@ -35,6 +38,16 @@ function StatCard({
       )}
     </div>
   )
+
+  if (href) {
+    return (
+      <Link href={href} className="block transition-transform hover:-translate-y-0.5">
+        {content}
+      </Link>
+    )
+  }
+
+  return content
 }
 
 export default async function DashboardPage() {
@@ -135,6 +148,7 @@ export default async function DashboardPage() {
             value={stats.totalReports}
             color={stats.totalReports > 0 ? 'red' : 'gray'}
             sub={stats.totalReports > 0 ? 'À modérer' : undefined}
+            href="/admin/dashboard/reports"
           />
         </div>
       </section>

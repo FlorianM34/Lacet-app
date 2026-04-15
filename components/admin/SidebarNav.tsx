@@ -52,6 +52,19 @@ const navItems = [
       </svg>
     ),
   },
+  {
+    label: 'Signalements',
+    href: '/admin/dashboard/reports',
+    icon: (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 9v2m0 4h.01M10.29 3.86l-7.2 12.47A1 1 0 003.96 18h16.08a1 1 0 00.87-1.67l-7.2-12.47a1 1 0 00-1.74 0z"
+        />
+      </svg>
+    ),
+  },
 ]
 
 export function SidebarNav() {
