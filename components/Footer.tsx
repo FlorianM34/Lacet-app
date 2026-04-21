@@ -1,28 +1,26 @@
 import Link from 'next/link'
-import { LogoIcon } from './Logo'
+import { Logo } from './Logo'
 
 export function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-400">
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2">
-            <LogoIcon size={20} className="[&_path]:stroke-[#1D9E75] [&_circle]:fill-[#1D9E75]" />
-            <span className="text-white font-semibold">Lacet</span>
-          </div>
-          <div className="flex items-center gap-6 text-sm">
-            <Link href="/privacy" className="hover:text-white transition-colors">
-              Confidentialité
-            </Link>
-            <Link href="/terms" className="hover:text-white transition-colors">
-              CGU
-            </Link>
-            <Link href="/support" className="hover:text-white transition-colors">
-              Support
-            </Link>
-          </div>
-          <p className="text-sm">© Lacet 2026</p>
+    <footer
+      className="relative z-10 border-t px-4 sm:px-6 md:px-7 py-8 md:py-10"
+      style={{ background: 'var(--bg-deep)', borderColor: 'var(--line)' }}
+    >
+      <div className="max-w-[1180px] mx-auto flex flex-col items-center text-center gap-4 md:flex-row md:flex-wrap md:items-center md:justify-between md:text-left md:gap-6 text-[13px] text-ink-soft">
+        <Logo wordSize={20} />
+        <div className="flex flex-wrap justify-center gap-5">
+          <Link href="/support" className="hover:text-forest-deep transition-colors">
+            Support
+          </Link>
+          <Link href="/privacy" className="hover:text-forest-deep transition-colors">
+            Confidentialité
+          </Link>
+          <Link href="/terms" className="hover:text-forest-deep transition-colors">
+            CGU
+          </Link>
         </div>
+        <div className="font-mono text-xs text-stone">© Lacet 2026</div>
       </div>
     </footer>
   )

@@ -1,37 +1,35 @@
 import Image from 'next/image'
-import { Dancing_Script } from 'next/font/google'
-
-const dancingScript = Dancing_Script({
-  subsets: ['latin'],
-  weight: ['700'],
-  display: 'swap',
-})
 
 interface LogoProps {
   size?: number
   className?: string
 }
 
-export function LogoIcon({ size = 40, className = '' }: LogoProps) {
+export function LogoIcon({ size = 32, className = '' }: LogoProps) {
   return (
-    <Image
-      src="/logo.png"
-      alt="Lacet logo"
-      width={size}
-      height={size}
-      className={className}
+    <span
+      className={`inline-grid place-items-center ${className}`}
+      style={{ width: size, height: size }}
       aria-hidden="true"
-    />
+    >
+      <Image src="/logo.png" alt="" width={size} height={size} style={{ objectFit: 'contain' }} />
+    </span>
   )
 }
 
-export function Logo({ className = '' }: { className?: string }) {
+export function Logo({
+  className = '',
+  wordSize = 26,
+}: {
+  className?: string
+  wordSize?: number
+}) {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <LogoIcon size={40} />
+    <div className={`flex items-center gap-2.5 ${className}`}>
+      <LogoIcon size={32} />
       <span
-        className={dancingScript.className}
-        style={{ color: '#4B9C78', fontSize: '2rem', lineHeight: 1 }}
+        className="font-serif italic leading-none text-forest-deep"
+        style={{ fontSize: wordSize, letterSpacing: '-0.01em', paddingTop: 2 }}
         aria-label="Lacet"
       >
         lacet
