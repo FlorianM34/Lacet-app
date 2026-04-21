@@ -5,6 +5,8 @@ import Image from 'next/image'
 import { Nav } from '@/components/Nav'
 import { Footer } from '@/components/Footer'
 
+const KM_TOTAL = 14
+
 function AppStoreBadge({ store }: { store: 'apple' | 'google' }) {
   return (
     <a
@@ -31,11 +33,56 @@ function AppStoreBadge({ store }: { store: 'apple' | 'google' }) {
   )
 }
 
+function MountainBackdrop() {
+  return (
+    <div className="mountain-backdrop pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden="true">
+      <svg
+        className="absolute inset-x-0 bottom-0 w-full h-[40vh] min-h-[240px] md:h-[60vh] md:min-h-[360px]"
+        viewBox="0 0 1440 600"
+        preserveAspectRatio="none"
+        fill="none"
+      >
+        {/* Range arrière — la plus lointaine */}
+        <path
+          d="M0 420 L90 330 L170 380 L260 280 L360 360 L460 300 L560 370 L660 290 L780 350 L880 300 L980 360 L1090 290 L1200 350 L1310 310 L1440 360 L1440 600 L0 600 Z"
+          fill="var(--forest)"
+          opacity="0.18"
+          strokeLinejoin="round"
+        />
+        {/* Range médiane */}
+        <path
+          d="M0 480 L110 390 L210 440 L320 360 L430 420 L540 370 L660 430 L780 360 L900 420 L1010 370 L1130 430 L1240 380 L1340 430 L1440 400 L1440 600 L0 600 Z"
+          fill="var(--forest)"
+          opacity="0.32"
+          strokeLinejoin="round"
+        />
+        {/* Range avant — la plus proche */}
+        <path
+          d="M0 540 L90 470 L180 510 L290 440 L400 500 L510 460 L620 510 L740 450 L860 500 L970 460 L1090 510 L1200 460 L1310 500 L1440 470 L1440 600 L0 600 Z"
+          fill="var(--forest-deep)"
+          opacity="0.55"
+          strokeLinejoin="round"
+        />
+        {/* Mini logos sur les pentes — range arrière */}
+        {/* Pente montante (170,380)→(260,280) à 35% : angle -48° */}
+        <image href="/logo.png" x="178" y="308" width="48" height="48" opacity="0.3" transform="rotate(-60, 202, 345)" />
+        {/* Pente descendante (460,300)→(560,370) à 40% : angle +35° */}
+        <image href="/logo.png" x="477" y="297" width="46" height="46" opacity="0.4" transform="rotate(15, 500, 328)" />
+        {/* Pente montante (780,350)→(880,300) à mi-pente : angle -27° */}
+        <image href="/logo.png" x="808" y="370" width="44" height="44" opacity="0.5" transform="rotate(-27, 830, 325)" />
+        {/* Pente descendante (1090,290)→(1200,350) à 40% : angle +29° */}
+        <image href="/logo.png" x="1111" y="280" width="46" height="46" opacity="0.6" transform="rotate(15, 1134, 314)" />
+        {/* Pente montante range médiane (210,440)→(320,360) à 40% : angle -36° */}
+        <image href="/logo.png" x="233" y="377" width="42" height="42" opacity="0.6" transform="rotate(-36, 254, 408)" />
+      </svg>
+    </div>
+  )
+}
+
 function PhoneMockup() {
   return (
     <div
-      className="rounded-[44px] border-[5px] border-gray-800 overflow-hidden shadow-[0_3px_6px_rgba(61,52,43,0.1),0_30px_60px_-20px_rgba(61,52,43,0.35),0_10px_20px_-10px_rgba(61,52,43,0.2)]"
-      style={{ transform: 'rotate(-3deg)', width: 270 }}
+      className="w-[220px] sm:w-[240px] md:w-[270px] rotate-[-3deg] rounded-[36px] md:rounded-[44px] border-[4px] md:border-[5px] border-gray-800 overflow-hidden shadow-[0_3px_6px_rgba(61,52,43,0.1),0_30px_60px_-20px_rgba(61,52,43,0.35),0_10px_20px_-10px_rgba(61,52,43,0.2)]"
     >
       <Image
         src="/app-screenshot.png"
@@ -91,7 +138,7 @@ const FEATURES: FeatureRow[] = [
     tag: '— feed par swipe',
     title: 'Glisse à droite pour rejoindre.',
     desc: "Un feed géolocalisé de randonnées près de chez toi. Filtre par rayon, niveau et période — swipe à droite pour rejoindre, à gauche pour passer. Simple comme Tinder.",
-    label: 'km 0 · explorer',
+    label: 'explorer',
     stats: [
       { k: 'Niveaux', v: 'Facile → Expert' },
       { k: 'Limite', v: '3 randos actives' },
@@ -108,7 +155,7 @@ const FEATURES: FeatureRow[] = [
     tag: '— organiser',
     title: 'Publie, accepte, gère ton groupe.',
     desc: "Importe un fichier GPX et publie ta rando en quelques secondes. Choisis entre acceptation automatique ou validation manuelle — tu restes maître de ton groupe.",
-    label: 'km 4 · organiser',
+    label: 'organiser',
     stats: [
       { k: 'Import', v: 'GPX' },
       { k: 'Validation', v: 'auto ou manuelle' },
@@ -126,7 +173,7 @@ const FEATURES: FeatureRow[] = [
     tag: '— chat de groupe',
     title: 'Coordonne sans quitter l\'appli.',
     desc: "Un chat dédié s'ouvre dès que le groupe est formé. Épingle le message de rendez-vous (lieu + heure), reçois les notifications en temps réel. Fini les groupes WhatsApp.",
-    label: 'km 8 · chat',
+    label: 'chat',
     stats: [
       { k: 'RDV', v: 'message épinglable' },
       { k: 'Notifs', v: 'push temps réel' },
@@ -144,7 +191,7 @@ const FEATURES: FeatureRow[] = [
     tag: '— notes & badges',
     title: 'La confiance se mérite, et se voit.',
     desc: "Après chaque sortie, note tes compagnons (1 à 5 étoiles). Les avis restent secrets jusqu'à la révélation collective — ou au bout de 48h. Ton score moyen est public.",
-    label: 'km 12 · confiance',
+    label: 'confiance',
     stats: [
       { k: 'Notes', v: 'révélation collective' },
       { k: 'Badges', v: '9 débloquables' },
@@ -161,14 +208,14 @@ const FEATURES: FeatureRow[] = [
 function Waypoint({ id, label }: { id: number; label: string }) {
   return (
     <div
-      className="wp flex justify-center items-center relative z-[3] col-start-2"
+      className="wp hidden md:flex justify-center items-center relative z-[3] col-start-2"
       data-waypoint-id={id}
     >
       <div className="wp-inner grid place-items-center w-14 h-14 rounded-full bg-paper border-2 border-line shadow-topo font-mono text-[11px] text-ink-soft tracking-wider relative transition-[border-color,transform,background,color] duration-[400ms]">
         {String(id).padStart(2, '0')}
       </div>
       <span className="absolute top-full mt-2.5 font-mono text-[10px] text-stone tracking-[0.1em] uppercase whitespace-nowrap">
-        {label}
+        <span data-waypoint-km>km —</span> · {label}
       </span>
     </div>
   )
@@ -222,6 +269,14 @@ export default function HomePage() {
         const r = summit.getBoundingClientRect()
         endY = r.top + window.scrollY + 30
       }
+
+      waypointEls.forEach((el, i) => {
+        const wpY = waypointPositions[i].y
+        const ratio = endY > startY ? (wpY - startY) / (endY - startY) : 0
+        const clamped = Math.max(0, Math.min(1, ratio))
+        const kmEl = el.querySelector<HTMLElement>('[data-waypoint-km]')
+        if (kmEl) kmEl.textContent = `km ${(clamped * KM_TOTAL).toFixed(1)}`
+      })
 
       const steps = 40
       const pts: { x: number; y: number }[] = [{ x: cx, y: startY }]
@@ -281,15 +336,20 @@ export default function HomePage() {
 
         prog.style.strokeDashoffset = String(totalLength * (1 - p))
 
-        const kmTotal = 14
-        pillLabel.textContent = `km ${(p * kmTotal).toFixed(1)}`
+        pillLabel.textContent = `km ${(p * KM_TOTAL).toFixed(1)}`
         pillFill.style.width = p * 100 + '%'
 
         document.querySelectorAll<HTMLElement>('[data-waypoint-id]').forEach((el) => {
           const rect = el.getBoundingClientRect()
           const elY = rect.top + sy + rect.height / 2
-          if (focus >= elY) el.classList.add('visited')
-          else el.classList.remove('visited')
+          const featureCard = el.closest('.feature-row')?.querySelector<HTMLElement>('.feature-card')
+          if (focus >= elY) {
+            el.classList.add('visited')
+            featureCard?.classList.add('trail-reached')
+          } else {
+            el.classList.remove('visited')
+            featureCard?.classList.remove('trail-reached')
+          }
         })
 
         document.querySelectorAll<HTMLElement>('.fade-in').forEach((el) => {
@@ -331,6 +391,8 @@ export default function HomePage() {
     <>
       <Nav />
 
+      <MountainBackdrop />
+
       <main ref={mainRef} className="relative z-[1]">
         {/* Trail SVG layer */}
         <div className="pointer-events-none absolute inset-0 z-[1] hidden md:block">
@@ -360,8 +422,8 @@ export default function HomePage() {
         </div>
 
         {/* HERO */}
-        <section className="relative min-h-screen pt-32 pb-24 flex items-center overflow-hidden">
-          <div className="max-w-[1180px] mx-auto px-7 w-full grid lg:grid-cols-[1.05fr_0.95fr] gap-14 items-center relative z-[2]">
+        <section className="relative pt-24 pb-16 md:min-h-screen md:pt-32 md:pb-24 flex items-center overflow-hidden">
+          <div className="max-w-[1180px] mx-auto px-4 sm:px-6 md:px-7 w-full grid lg:grid-cols-[1.05fr_0.95fr] gap-10 md:gap-14 items-center relative z-[2]">
             <div>
               <span className="inline-flex items-center gap-2.5 pl-2.5 pr-3.5 py-[7px] bg-[var(--surface-strong)] border border-line rounded-full font-mono text-xs text-ink-soft tracking-wider shadow-topo mb-7">
                 <span className="pulse w-2 h-2 rounded-full bg-forest" />
@@ -370,7 +432,7 @@ export default function HomePage() {
               <h1
                 className="font-sans font-bold text-ink m-0 mb-6"
                 style={{
-                  fontSize: 'clamp(40px, 6vw, 68px)',
+                  fontSize: 'clamp(34px, 8vw, 68px)',
                   lineHeight: 1.02,
                   letterSpacing: '-0.028em',
                   textWrap: 'balance',
@@ -383,7 +445,7 @@ export default function HomePage() {
                 </em>
               </h1>
               <p
-                className="text-lg text-ink-soft max-w-[520px] mb-9"
+                className="text-base md:text-lg text-ink-soft max-w-[520px] mb-8 md:mb-9"
                 style={{ textWrap: 'pretty' as React.CSSProperties['textWrap'] }}
               >
                 Lacet met en relation des randonneurs via un feed géolocalisé par swipe. Glisse à droite
@@ -392,12 +454,12 @@ export default function HomePage() {
               <div className="flex flex-wrap items-center gap-3">
                 <AppStoreBadge store="apple" />
                 <AppStoreBadge store="google" />
-                <span className="ml-1.5 font-mono text-xs text-stone">· connexion par numéro · sans mdp</span>
+                <span className="w-full md:w-auto md:ml-1.5 mt-1 md:mt-0 font-mono text-xs text-stone">· connexion par numéro · sans mdp</span>
               </div>
             </div>
 
-            <div className="relative flex justify-center items-center min-h-[560px]">
-              <TopoCard label="Sortie à proximité" className="top-10 -left-2.5">
+            <div className="relative flex justify-center items-center min-h-0 md:min-h-[560px]">
+              <TopoCard label="Sortie à proximité" className="top-10 -left-2.5 hidden md:block">
                 <span className="font-sans text-[15px] font-medium text-ink" style={{ letterSpacing: '-0.01em' }}>
                   Tour du pic Saint-Loup
                 </span>
@@ -408,7 +470,7 @@ export default function HomePage() {
                 </div>
               </TopoCard>
 
-              <TopoCard label="Groupe formé" className="bottom-16 -right-5">
+              <TopoCard label="Groupe formé" className="bottom-16 -right-5 hidden md:block">
                 <div className="flex items-center gap-2.5 mt-1">
                   <div className="flex">
                     <span
@@ -443,18 +505,18 @@ export default function HomePage() {
         </section>
 
         {/* FEATURES */}
-        <section className="relative py-30" style={{ paddingTop: 160, paddingBottom: 120 }}>
+        <section className="relative pt-20 pb-16 md:pt-[160px] md:pb-[120px]">
           <SectionHead
             kicker="étape 1 · repérage"
             titleStart="Tout ce qu'il faut "
             titleEm="pour trouver ta cordée."
             lede="Un feed par swipe, un chat dédié, des notes anonymes. Rien de superflu — juste ce qu'il faut pour partir avec les bonnes personnes."
           />
-          <div className="max-w-[1180px] mx-auto px-7">
+          <div className="max-w-[1180px] mx-auto px-4 sm:px-6 md:px-7">
             {FEATURES.map((f) => (
               <div
                 key={f.id}
-                className="feature-row relative py-[70px] min-h-[260px] grid md:grid-cols-[1fr_220px_1fr] items-center gap-0"
+                className="feature-row relative py-10 md:py-[70px] min-h-0 md:min-h-[260px] grid md:grid-cols-[1fr_220px_1fr] items-center gap-0"
               >
                 {f.side === 'left' ? (
                   <>
@@ -478,11 +540,11 @@ export default function HomePage() {
         {/* SOMMET */}
         <section
           ref={summitRef}
-          className="summit-section relative pt-16 pb-24 flex flex-col items-center justify-center text-center z-[2]"
+          className="summit-section relative pt-10 pb-16 md:pt-16 md:pb-24 flex flex-col items-center justify-center text-center z-[2]"
         >
           <svg
             viewBox="0 0 240 150"
-            className="summit-svg w-[220px] md:w-[280px] mb-5 overflow-visible"
+            className="summit-svg w-[180px] sm:w-[220px] md:w-[280px] mb-5 overflow-visible"
             fill="none"
             aria-hidden="true"
           >
@@ -543,7 +605,7 @@ export default function HomePage() {
             · sommet atteint ·
           </span>
           <p
-            className="summit-text font-serif italic text-[28px] md:text-[34px] text-forest-deep m-0"
+            className="summit-text font-serif italic text-[22px] sm:text-[28px] md:text-[34px] text-forest-deep m-0"
             style={{ letterSpacing: '-0.01em' }}
           >
             tu es arrivé.
@@ -551,15 +613,15 @@ export default function HomePage() {
         </section>
 
         {/* FINAL CTA */}
-        <section id="download" className="relative pt-36 pb-40 text-center">
-          <div className="max-w-[1180px] mx-auto px-7 relative z-[2]">
+        <section id="download" className="relative pt-20 pb-24 md:pt-36 md:pb-40 text-center">
+          <div className="max-w-[1180px] mx-auto px-4 sm:px-6 md:px-7 relative z-[2]">
             <span className="section-kicker font-mono text-xs text-forest tracking-widest uppercase mb-3.5 inline-flex items-center gap-2">
               sommet · destination
             </span>
             <h2
               className="font-sans font-bold text-ink m-0 mb-5"
               style={{
-                fontSize: 'clamp(40px, 5.5vw, 64px)',
+                fontSize: 'clamp(30px, 7vw, 64px)',
                 lineHeight: 1,
                 letterSpacing: '-0.028em',
                 textWrap: 'balance',
@@ -569,7 +631,7 @@ export default function HomePage() {
               <em className="font-serif italic font-normal text-forest-deep">ça se partage.</em>
             </h2>
             <p
-              className="text-lg text-ink-soft max-w-[460px] mx-auto mb-10"
+              className="text-base md:text-lg text-ink-soft max-w-[460px] mx-auto mb-10"
               style={{ textWrap: 'pretty' as React.CSSProperties['textWrap'] }}
             >
               Trouve ta cordée en quelques swipes. Disponible sur iOS et Android, connexion par numéro de téléphone — sans mot de passe.
@@ -586,7 +648,7 @@ export default function HomePage() {
       {/* Progress pill */}
       <div
         ref={pillRef}
-        className="progress-pill fixed bottom-6 right-6 z-40 bg-[var(--surface-strong)] backdrop-blur-md border border-line px-3 py-2 rounded-full font-mono text-[11px] text-ink-soft shadow-topo flex items-center gap-2.5"
+        className="progress-pill fixed bottom-4 right-4 md:bottom-6 md:right-6 z-40 bg-[var(--surface-strong)] backdrop-blur-md border border-line px-2.5 py-1.5 md:px-3 md:py-2 rounded-full font-mono text-[11px] text-ink-soft shadow-topo flex items-center gap-2.5"
       >
         <span className="w-2 h-2 rounded-full bg-forest" style={{ boxShadow: '0 0 0 3px rgba(58,124,90,0.2)' }} />
         <span ref={pillLabelRef}>km 0</span>
@@ -677,6 +739,10 @@ export default function HomePage() {
           opacity: 0;
           transition: opacity 400ms ease;
         }
+        @keyframes wp-float {
+          0%, 100% { transform: scale(1.05) translateY(0); }
+          50%      { transform: scale(1.05) translateY(-4px); }
+        }
         .wp.visited .wp-inner {
           background: rgba(58, 124, 90, 0.10);
           backdrop-filter: blur(10px);
@@ -685,6 +751,10 @@ export default function HomePage() {
           border-color: var(--forest);
           box-shadow: 0 0 0 3px rgba(58, 124, 90, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.55);
           transform: scale(1.05);
+          animation: wp-float 3s ease-in-out 400ms infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .wp.visited .wp-inner { animation: none; }
         }
         .wp.visited .wp-inner::before {
           opacity: 0.35;
@@ -780,6 +850,20 @@ export default function HomePage() {
         @keyframes flag-wave {
           0%, 100% { transform: skewX(0deg) scaleX(1); }
           50%      { transform: skewX(-6deg) scaleX(0.92); }
+        }
+
+        .feature-card {
+          transition: translate 0.6s ease-in-out, scale 0.6s ease-in-out, filter 0.6s ease-in-out;
+          transform-origin: center bottom;
+        }
+        .feature-card.trail-reached {
+          translate: 0 -10px;
+          scale: 1.035;
+          filter: drop-shadow(0 22px 34px rgba(42, 90, 66, 0.30));
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .feature-card { transition: none; }
+          .feature-card.trail-reached { translate: 0; scale: 1; filter: none; }
         }
 
         @media (max-width: 960px) {

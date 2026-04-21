@@ -11,21 +11,21 @@ export default function PrivacyPage() {
   return (
     <>
       <Nav />
-      <main className="pt-16 min-h-screen bg-white">
-        <div className="max-w-3xl mx-auto px-6 py-16">
-          <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
+      <main className="pt-14 md:pt-16 min-h-screen bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 md:py-16">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-2">
             Politique de confidentialité
           </h1>
-          <p className="text-gray-400 text-sm mb-12">Dernière mise à jour : 13 avril 2025</p>
+          <p className="text-gray-400 text-sm mb-10 md:mb-12">Dernière mise à jour : 13 avril 2025</p>
 
-          <div className="bg-[#E1F5EE] border-l-4 border-[#1D9E75] rounded-r-xl px-5 py-4 mb-12 text-sm text-[#085041] leading-relaxed">
+          <div className="bg-[#E1F5EE] border-l-4 border-[#1D9E75] rounded-r-xl px-5 py-4 mb-10 md:mb-12 text-sm text-[#085041] leading-relaxed">
             Lacet est une application de mise en relation de randonneurs. Nous collectons uniquement les données nécessaires au fonctionnement du service. Nous ne vendons jamais tes données et nous n&apos;affichons pas de publicité.
           </div>
 
-          <div className="space-y-12">
+          <div className="space-y-10 md:space-y-12">
 
             <section>
-              <h2 className="text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">1. Qui sommes-nous ?</h2>
+              <h2 className="text-lg md:text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">1. Qui sommes-nous ?</h2>
               <p className="text-gray-600 text-sm leading-relaxed mb-3">
                 Lacet est une application mobile éditée par [Nom de l&apos;entité juridique], dont le siège social est situé à [Adresse]. Pour toute question relative à la protection de tes données, tu peux nous contacter à l&apos;adresse <a href="mailto:privacy@lacet.app" className="text-[#1D9E75] hover:underline">privacy@lacet.app</a>.
               </p>
@@ -35,7 +35,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">2. Données collectées</h2>
+              <h2 className="text-lg md:text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">2. Données collectées</h2>
               <p className="text-gray-600 text-sm leading-relaxed mb-4">
                 Nous collectons uniquement les données strictement nécessaires au fonctionnement de Lacet.
               </p>
@@ -105,7 +105,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">3. Finalités et bases légales</h2>
+              <h2 className="text-lg md:text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">3. Finalités et bases légales</h2>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm border-collapse">
                   <thead>
@@ -135,7 +135,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">4. Durée de conservation</h2>
+              <h2 className="text-lg md:text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">4. Durée de conservation</h2>
               <div className="overflow-x-auto mb-4">
                 <table className="w-full text-sm border-collapse">
                   <thead>
@@ -167,7 +167,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">5. Partage des données</h2>
+              <h2 className="text-lg md:text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">5. Partage des données</h2>
               <p className="text-gray-600 text-sm leading-relaxed mb-4">Nous ne vendons jamais tes données personnelles à des tiers.</p>
 
               <h3 className="text-sm font-semibold text-gray-900 mb-2">Données visibles par les autres utilisateurs</h3>
@@ -204,14 +204,14 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">6. Hébergement et transferts hors UE</h2>
+              <h2 className="text-lg md:text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">6. Hébergement et transferts hors UE</h2>
               <p className="text-gray-600 text-sm leading-relaxed">
                 Les données sont principalement hébergées dans l&apos;Union européenne (Supabase sur AWS Frankfurt). Certains sous-traitants (Twilio, Expo, Mapbox) sont établis aux États-Unis. Ces transferts sont encadrés par les Clauses Contractuelles Types (CCT) de la Commission européenne, conformément à l&apos;article 46 du RGPD.
               </p>
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">7. Tes droits</h2>
+              <h2 className="text-lg md:text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">7. Tes droits</h2>
               <p className="text-gray-600 text-sm leading-relaxed mb-5">
                 Conformément au RGPD, tu disposes des droits suivants sur tes données personnelles :
               </p>
@@ -236,14 +236,14 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">8. Mineurs</h2>
+              <h2 className="text-lg md:text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">8. Mineurs</h2>
               <p className="text-gray-600 text-sm leading-relaxed">
                 Lacet est une application destinée aux personnes âgées d&apos;au moins 16 ans. Nous ne collectons pas sciemment de données concernant des personnes de moins de 16 ans. Si tu constates qu&apos;un mineur a créé un compte, contacte-nous à <a href="mailto:privacy@lacet.app" className="text-[#1D9E75] hover:underline">privacy@lacet.app</a> pour que nous procédions à la suppression du compte dans les meilleurs délais.
               </p>
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">9. Modifications de cette politique</h2>
+              <h2 className="text-lg md:text-xl font-bold text-[#085041] mb-4 pb-3 border-b-2 border-[#E1F5EE]">9. Modifications de cette politique</h2>
               <p className="text-gray-600 text-sm leading-relaxed mb-3">
                 Nous pouvons être amenés à modifier cette politique de confidentialité pour refléter des évolutions légales ou des changements dans notre service. En cas de modification substantielle, tu seras notifié par une notification push ou un message dans l&apos;application au moins 30 jours avant l&apos;entrée en vigueur des changements.
               </p>
@@ -252,8 +252,8 @@ export default function PrivacyPage() {
               </p>
             </section>
 
-            <div className="bg-gray-50 border border-gray-100 rounded-2xl p-8 text-center">
-              <h2 className="text-xl font-bold text-gray-900 mb-2">10. Nous contacter</h2>
+            <div className="bg-gray-50 border border-gray-100 rounded-2xl p-6 md:p-8 text-center">
+              <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">10. Nous contacter</h2>
               <p className="text-sm text-gray-500 mb-5">Pour toute question relative à la protection de tes données personnelles :</p>
               <a
                 href="mailto:privacy@lacet.app"

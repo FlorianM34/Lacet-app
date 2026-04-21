@@ -32,10 +32,16 @@
     @apply font-sans antialiased;
     color: var(--ink);
     background: var(--bg);
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.55;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
+  }
+
+  @media (min-width: 768px) {
+    body {
+      font-size: 16px;
+    }
   }
 
   /* Topo dot grid — very subtle */
@@ -44,10 +50,16 @@
     position: fixed;
     inset: 0;
     background-image: radial-gradient(circle at 1px 1px, rgba(61, 52, 43, 0.055) 1px, transparent 0);
-    background-size: 28px 28px;
+    background-size: 20px 20px;
     pointer-events: none;
     z-index: 0;
     opacity: 0.55;
+  }
+
+  @media (min-width: 768px) {
+    body::before {
+      background-size: 28px 28px;
+    }
   }
 
   /* Noise texture */
@@ -60,6 +72,15 @@
     pointer-events: none;
     mix-blend-mode: multiply;
     z-index: 0;
+  }
+
+  @media (max-width: 480px) {
+    body::before {
+      opacity: 0.35;
+    }
+    body::after {
+      opacity: 0.02;
+    }
   }
 }
 

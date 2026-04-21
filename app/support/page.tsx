@@ -90,14 +90,14 @@ export default function SupportPage() {
   return (
     <>
       <Nav />
-      <main className="pt-16 min-h-screen bg-white">
-        <div className="max-w-3xl mx-auto px-6 py-16">
-          <h1 className="text-4xl font-extrabold text-gray-900 mb-4">Centre d&apos;aide</h1>
-          <p className="text-gray-500 mb-12">
+      <main className="pt-14 md:pt-16 min-h-screen bg-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 md:py-16">
+          <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Centre d&apos;aide</h1>
+          <p className="text-gray-500 mb-10 md:mb-12">
             Retrouve les réponses aux questions les plus fréquentes sur Lacet.
           </p>
 
-          <div className="space-y-12 mb-16">
+          <div className="space-y-10 md:space-y-12 mb-12 md:mb-16">
             {FAQ_SECTIONS.map((section) => (
               <section key={section.title}>
                 <h2 className="text-xs font-semibold tracking-widest uppercase text-[#1D9E75] mb-5 pb-2 border-b-2 border-[#E1F5EE]">
@@ -115,8 +115,8 @@ export default function SupportPage() {
             ))}
           </div>
 
-          <div className="bg-gray-50 border border-gray-100 rounded-2xl p-8 text-center">
-            <h2 className="text-xl font-bold text-gray-900 mb-2">Tu n&apos;as pas trouvé ta réponse ?</h2>
+          <div className="bg-gray-50 border border-gray-100 rounded-2xl p-6 md:p-8 text-center">
+            <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">Tu n&apos;as pas trouvé ta réponse ?</h2>
             <p className="text-sm text-gray-500 mb-6">Notre équipe répond généralement sous 24 à 48 heures.</p>
             <a
               href="mailto:support@lacet.app"
